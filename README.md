@@ -1,5 +1,5 @@
 # word-challenge
-## A game inspired by Webkinz Quizzy's Word Challenge
+## A game inspired by Webkinz Quizzy's Word Challenge :pencil2:
 For Mom :sparkling_heart:
 
 ### How to play:
@@ -8,7 +8,7 @@ For Mom :sparkling_heart:
 
 **Rules:**
 - Once you choose a letter tile in a more central ring of the board, you may not choose a letter in a more outer ring. This means that the middlemost tile can only be used as the last letter of a word.
-- Words must be $>=$ 3 letters, and each letter tile may only be used once per word.
+- Words must be $\ge$ 3 letters, and each letter tile may only be used once per word.
 - Letter tiles that have been used for the previous word reset for the next word.
 - Letter tiles do not need to be adjacent in order to be used. The `shuffle` button will shuffle the letters within each ring.
 - Proper nouns are not permitted.
