@@ -20,6 +20,7 @@ Script for the word challenge game
 # Imports
 import csv
 import numpy as np
+from random import shuffle
 
 
 # Objects
@@ -115,6 +116,18 @@ class Game:
 
 		return middle_letters
 
+	def shuffle(self):
+		"""
+		Shuffle the letters in the outer and middle rings
+
+		Output:
+		Re-ordered lists of outer and middle letters
+		"""
+
+		#shuffle letters in outer and middle rings
+		shuffle(self.outer)
+		shuffle(self.middle)
+
 	def word_check(self, out = None, mid = None, inn = False):
 		"""
 		Concatenate selected letters into a word and check it against the dictionary
@@ -137,12 +150,12 @@ class Game:
 
 		outer_pts = []
 		for let in outer_let:
-			pts = letters[let][0]
+			pts = letters[][0]
 			outer_pts.append(pts)
 		outer_tot = sum(outer_pts)
 
 		#pass list into inner_select and calculate points
-		middle_let = self.middle_select(mid)
+		middle_let = self.inner_select(mid)
 
 		middle_pts = []
 		for let in middle_let:
@@ -168,10 +181,6 @@ class Game:
 			print(f"{word} is an accepted word worth {points} points!")
 		else:
 			print(f"{word} is not an accepted word.")
-
-
-def shuffle():
-	#shuffle letters position
 
 
 def clear():
