@@ -1,5 +1,6 @@
 from sys import exit
 import pygame
+from game import Game, Tile
 pygame.init()
 
 
@@ -13,8 +14,6 @@ background = pygame.Surface((800,600))
 background.fill((170, 230, 250))
 #text_surface = webkinz_font.render('Hello World!', True, 'White')
 
-clicked = False #define a global variable for use with the tiles
-
 #tilemap = [
 #    [outer1, outer2, outer3, outer4, outer5],
  #   [outer6, middle1, middle2, middle3, outer7],
@@ -23,76 +22,14 @@ clicked = False #define a global variable for use with the tiles
     #[outer12, outer13, outer14, outer15, outer16]
 #]
 
-#define the tile class
-class Tile():
+############### QUESTIONS ################
+#
+# - Does the dictionary/points csv need to be called inside of the game run?
+#
+#
+##########################################
 
-    tile_color = (205, 55, 225)
-    hover_color = (245, 130, 255)
-    clicked_color = (255, 230, 60)
-    text_color = (0, 0, 0)
-    width = height = 85
-
-    def __init__(self, x, y, letter, score):
-        self.x = x #tile x position
-        self.y = y #tile y position
-        self.letter = letter
-        self.score = score
-
-    def drawtile(self):
-
-        global clicked
-        action = False
-
-        mousepos = pygame.mouse.get_pos() #variable to store the mouse position (x, y)
-
-        tile_rect = pygame.Rect(self.x, self.y, self.width, self.height) #pygame Rect object for the tile
-
-        # check mouseover and clicked conditions
-        if tile_rect.collidepoint(mousepos):
-            if pygame.mouse.get_pressed()[0] == 1:
-                clicked = True
-                pygame.draw.rect(screen, self.clicked_color, tile_rect)
-            elif pygame.mouse.get_pressed()[0] == 0 and clicked == True:
-                clicked = False
-                action = True
-            else:
-                pygame.draw.rect(screen, self.hover_color, tile_rect)
-        else:
-            pygame.draw.rect(screen, self.tile_color, tile_rect)
-
-        # add letters and score to tile
-        letterimage = webkinz_font.render(self.letter, True, self.text_color).convert_alpha()
-        letterwidth = letterimage.get_width()
-        letterheight = letterimage.get_height()
-        screen.blit(letterimage, (self.x + (self.width / 2) - (letterwidth / 2), self.y + (self.height / 2) - (letterheight / 2)))
-
-        return action
-
-outertile1 = Tile(0+85*0, 0+85*0, "1", "0")
-outertile2 = Tile(0+85*1, 0+85*0, "2", "0")
-outertile3 = Tile(0+85*2, 0+85*0, "3", "0")
-outertile4 = Tile(0+85*3, 0+85*0, "4", "0")
-outertile5 = Tile(0+85*4, 0+85*0, "5", "0")
-outertile6 = Tile(0+85*4, 0+85*1, "6", "0")
-outertile7 = Tile(0+85*4, 0+85*2, "7", "0")
-outertile8 = Tile(0+85*4, 0+85*3, "8", "0")
-outertile9 = Tile(0+85*4, 0+85*4, "9", "0")
-outertile10 = Tile(0+85*3, 0+85*4, "10", "0")
-outertile11 = Tile(0+85*2, 0+85*4, "11", "0")
-outertile12 = Tile(0+85*1, 0+85*4, "12", "0")
-outertile13 = Tile(0+85*0, 0+85*4, "13", "0")
-outertile14 = Tile(0+85*0, 0+85*3, "14", "0")
-outertile15 = Tile(0+85*0, 0+85*2, "15", "0")
-outertile16 = Tile(0+85*0, 0+85*1, "16", "0")
-innertile1 = Tile(0+85*1, 0+85*1, "1", "0")
-innertile2 = Tile(0+85*2, 0+85*1, "2", "0")
-innertile3 = Tile(0+85*3, 0+85*1, "3", "0")
-innertile4 = Tile(0+85*3, 0+85*2, "4", "0")
-innertile5 = Tile(0+85*3, 0+85*3, "5", "0")
-innertile6 = Tile(0+85*2, 0+85*3, "6", "0")
-innertile7 = Tile(0+85*1, 0+85*3, "7", "0")
-innertile8 = Tile(0+85*1, 0+85*2, "8", "0")
-centertile = Tile(0+85*2, 0+85*2, "1", "0")
+# Run the game
 
 while True:
     for event in pygame.event.get():
@@ -100,8 +37,46 @@ while True:
             pygame.quit()
             exit()
 
-    screen.blit(background, (0,0))
+    screen.blit(background, (0,0)) #establish background
     #screen.blit(text_surface, (100,100))
+
+    # Play ten rounds
+    for i in range(10):
+
+        new_round = Game() #new round
+
+        # assign tiles letters and points (tbd on points)
+        ot1 = Tile(0+85*0, 0+85*0, f"{new_round.outer[0]}", "0")
+        ot2 = Tile(0+85*1, 0+85*0, f"{new_round.outer[1]}", "0")
+        ot3 = Tile(0+85*2, 0+85*0, f"{new_round.outer[2]}", "0")
+        ot4 = Tile(0+85*3, 0+85*0, f"{new_round.outer[3]}", "0")
+        ot5 = Tile(0+85*4, 0+85*0, f"{new_round.outer[4]}", "0")
+        ot6 = Tile(0+85*4, 0+85*1, f"{new_round.outer[5]}", "0")
+        ot7 = Tile(0+85*4, 0+85*2, f"{new_round.outer[6]}", "0")
+        ot8 = Tile(0+85*4, 0+85*3, f"{new_round.outer[7]}", "0")
+        ot9 = Tile(0+85*4, 0+85*4, f"{new_round.outer[8]}", "0")
+        ot10 = Tile(0+85*3, 0+85*4, f"{new_round.outer[9]}", "0")
+        ot11 = Tile(0+85*2, 0+85*4, f"{new_round.outer[10]}", "0")
+        ot12 = Tile(0+85*1, 0+85*4, f"{new_round.outer[11]}", "0")
+        ot13 = Tile(0+85*0, 0+85*4, f"{new_round.outer[12]}", "0")
+        ot14 = Tile(0+85*0, 0+85*3, f"{new_round.outer[13]}", "0")
+        ot15 = Tile(0+85*0, 0+85*2, f"{new_round.outer[14]}", "0")
+        ot16 = Tile(0+85*0, 0+85*1, f"{new_round.outer[15]}", "0")
+        mt1 = Tile(0+85*1, 0+85*1, f"{new_round.middle[0]}", "0")
+        mt2 = Tile(0+85*2, 0+85*1, f"{new_round.middle[1]}", "0")
+        mt3 = Tile(0+85*3, 0+85*1, f"{new_round.middle[2]}", "0")
+        mt4 = Tile(0+85*3, 0+85*2, f"{new_round.middle[3]}", "0")
+        mt5 = Tile(0+85*3, 0+85*3, f"{new_round.middle[4]}", "0")
+        mt6 = Tile(0+85*2, 0+85*3, f"{new_round.middle[5]}", "0")
+        mt7 = Tile(0+85*1, 0+85*3, f"{new_round.middle[6]}", "0")
+        mt8 = Tile(0+85*1, 0+85*2, f"{new_round.middle[7]}", "0")
+        it1 = Tile(0+85*2, 0+85*2, f"{new_round.inner[0]}", "0")
+
+
+        # create lists of tile rings (lost my train of thought for why I did this)
+        #outer_tiles = [ot1, ot2, ot3, ot4, ot5, ot6, ot7, ot8, ot9, ot10, ot11, ot12, ot13, ot14, ot15, ot16]
+        #middle_tiles = [mt1, mt2, mt3, mt4, mt5, mt6, mt7, mt8]
+        #inner_tile = [it1]
 
     if outertile1.drawtile():
         print("outer tile 1")

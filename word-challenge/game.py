@@ -20,7 +20,9 @@ Script for the word challenge game
 # Imports
 import csv
 import numpy as np
+import pygame
 from random import shuffle
+
 
 
 # Objects
@@ -150,7 +152,7 @@ class Game:
 
 		outer_pts = []
 		for let in outer_let:
-			pts = letters[][0]
+			pts = letters[let][0]
 			outer_pts.append(pts)
 		outer_tot = sum(outer_pts)
 
@@ -183,7 +185,59 @@ class Game:
 			print(f"{word} is not an accepted word.")
 
 
-def clear():
+
+
+
+# Creating the tile class
+
+class Tile():
+
+    tile_color = (205, 55, 225)
+    hover_color = (245, 130, 255)
+    clicked_color = (255, 230, 60)
+    text_color = (0, 0, 0)
+    width = height = 85
+
+    def __init__(self, x, y, letter, score, clicked = False):
+        self.x = x #tile x position
+        self.y = y #tile y position
+        self.letter = letter
+        self.score = score
+
+    def drawtile(self):
+
+        #global clicked
+        #clicked = False #define a global variable for use with the tiles
+        action = False
+
+        mousepos = pygame.mouse.get_pos() #variable to store the mouse position (x, y)
+
+        tile_rect = pygame.Rect(self.x, self.y, self.width, self.height) #pygame Rect object for the tile
+
+        # check mouseover and clicked conditions
+        if tile_rect.collidepoint(mousepos):
+            if pygame.mouse.get_pressed()[0] == 1:
+                clicked = True
+                pygame.draw.rect(screen, self.clicked_color, tile_rect)
+            elif pygame.mouse.get_pressed()[0] == 0 and clicked == True:
+                clicked = False
+                action = True
+            else:
+                pygame.draw.rect(screen, self.hover_color, tile_rect)
+        else:
+            pygame.draw.rect(screen, self.tile_color, tile_rect)
+
+        # add letters and score to tile
+        letterimage = webkinz_font.render(self.letter, True, self.text_color).convert_alpha()
+        letterwidth = letterimage.get_width()
+        letterheight = letterimage.get_height()
+        screen.blit(letterimage, (self.x + (self.width / 2) - (letterwidth / 2), self.y + (self.height / 2) - (letterheight / 2)))
+
+        return action
+
+
+
+#def clear():
 	#clear current letter selection. maybe this goes inside of word writing function?
 
 
