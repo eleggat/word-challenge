@@ -41,6 +41,8 @@ while True:
     #screen.blit(text_surface, (100,100))
 
     # Play ten rounds
+    total_points = 0 #start with points = 0
+
     for i in range(10):
 
         new_round = Game() #new round
@@ -77,6 +79,17 @@ while True:
         #outer_tiles = [ot1, ot2, ot3, ot4, ot5, ot6, ot7, ot8, ot9, ot10, ot11, ot12, ot13, ot14, ot15, ot16]
         #middle_tiles = [mt1, mt2, mt3, mt4, mt5, mt6, mt7, mt8]
         #inner_tile = [it1]
+
+
+        # empty lists for letters in each ring
+
+        # add indexes to each list based on order of tiles clicked
+
+        # word_check function using the lists
+        #points = new_round.word_check().points
+
+        # add points from round
+        total_points = total_points + points
 
     if outertile1.drawtile():
         print("outer tile 1")
